@@ -6,6 +6,8 @@ import br.com.ppd.tuplespace.models.User;
 import br.com.ppd.tuplespace.service.JavaSpaceService;
 import br.com.ppd.tuplespace.service.ServiceUnavailable;
 
+import java.util.List;
+
 import static br.com.ppd.tuplespace.util.Util.println;
 
 public class ListEnvironment implements Command {
@@ -22,7 +24,11 @@ public class ListEnvironment implements Command {
         }
 
         try {
-            Device env = (Device) this.service.read(new Device());
+            List<Environment> listEnv = this.service.listEnvironments();
+            println("+ Environments");
+            for(Environment env : listEnv) {
+                println("   - " + env.name);
+            }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }

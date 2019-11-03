@@ -21,6 +21,7 @@ class Application {
         showCommandsTable();
         String command;
         do {
+            print(">> ");
             command = this.scanner.nextLine();
             try {
                 CommandProcessor.process(command);

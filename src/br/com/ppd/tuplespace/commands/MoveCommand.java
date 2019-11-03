@@ -10,11 +10,11 @@ import java.util.List;
 
 import static br.com.ppd.tuplespace.util.Util.println;
 
-public class ListEnvironment implements ICommand {
+public class MoveCommand implements ICommand {
     private JavaSpaceService service;
     private String[] args;
 
-    public ListEnvironment() {
+    public MoveCommand() {
         this.service = JavaSpaceService.getInstance();
     }
 

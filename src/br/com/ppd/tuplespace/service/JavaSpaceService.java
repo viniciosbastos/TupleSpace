@@ -1,6 +1,8 @@
 package br.com.ppd.tuplespace.service;
 
+import br.com.ppd.tuplespace.models.Device;
 import br.com.ppd.tuplespace.models.Environment;
+import br.com.ppd.tuplespace.models.User;
 import br.com.ppd.tuplespace.util.Lookup;
 import net.jini.core.entry.Entry;
 import net.jini.core.entry.UnusableEntryException;
@@ -62,8 +64,8 @@ public class JavaSpaceService {
         return entry;
     }
 
-    private void write(List<Environment> listEnv) throws ServiceUnavailable {
-        for(Environment env : listEnv) {
+    private void write(List<? extends Entry> listEnv) throws ServiceUnavailable {
+        for(Entry env : listEnv) {
             send(env);
         }
     }
@@ -77,6 +79,34 @@ public class JavaSpaceService {
             env = (Environment) take(template);
             if (env != null) listEnv.add(env);
         } while(env != null);
+        write(listEnv);
+        return listEnv;
+    }
+
+    public List<User> listUsersByEnv(String env) throws ServiceUnavailable {
+        List<User> listEnv = new LinkedList<User>();
+
+        User user = null;
+        User template = new User();
+        template.environment = new Environment(env);
+        do {
+            user = (User) take(template);
+            if (user != null) listEnv.add(user);
+        } while(user != null);
+        write(listEnv);
+        return listEnv;
+    }
+
+    public List<Device> listDevicesByEnv(String env) throws ServiceUnavailable {
+        List<Device> listEnv = new LinkedList<Device>();
+
+        Device device = null;
+        Device template = new Device();
+        template.environment = new Environment(env);
+        do {
+            device = (Device) take(template);
+            if (device != null) listEnv.add(device);
+        } while(device != null);
         write(listEnv);
         return listEnv;
     }

@@ -1,14 +1,14 @@
 package br.com.ppd.tuplespace.commands;
 
 public enum ECommand {
-    ADD_ENV(new AddEnvironment()),
-    ADD_USER(new AddUser()),
-    ADD_DEV(new AddDevice()),
-    LIST_ENV(new ListEnvironment());
+    ADD(new AddCommand()),
+    LS(new ListEnvironment()),
+    RM(new RemoveCommand()),
+    MV(new MoveCommand());
 
-    private Command command;
+    private ICommand command;
 
-    ECommand(Command command) {
+    ECommand(ICommand command) {
         this.command = command;
     }
 

@@ -8,4 +8,8 @@ public class User implements Entry {
     public Environment environment;
 
     public User() {}
+    public User(String name, Environment environment) {
+        this.name = name;
+        this.environment = environment;
+    }
 }

@@ -17,7 +17,7 @@ public class JavaSpaceService {
     private static JavaSpaceService INSTANCE = null;
 
     private JavaSpace space;
-    private long timeout = 60*1000;
+    private long lease = 10*60*1000;
 
     private JavaSpaceService() {
         init();
@@ -29,7 +29,7 @@ public class JavaSpaceService {
 
     public void send(Entry entry) throws ServiceUnavailable{
         try {
-            this.space.write(entry, null, timeout);
+            this.space.write(entry, null, lease);
         } catch (RemoteException|TransactionException e) {
             e.printStackTrace();
             throw new ServiceUnavailable(e.getMessage());
@@ -39,7 +39,7 @@ public class JavaSpaceService {
     public Entry read(Entry template) throws ServiceUnavailable {
         Entry entry = null;
         try {
-            entry = this.space.readIfExists(template, null, timeout);
+            entry = this.space.readIfExists(template, null, lease);
         } catch (RemoteException|
                 TransactionException|
                 InterruptedException|
@@ -53,7 +53,7 @@ public class JavaSpaceService {
     public Entry take(Entry template) throws ServiceUnavailable {
         Entry entry = null;
         try {
-            entry = this.space.takeIfExists(template, null, timeout);
+            entry = this.space.takeIfExists(template, null, lease);
         } catch (RemoteException|
                 TransactionException|
                 InterruptedException|

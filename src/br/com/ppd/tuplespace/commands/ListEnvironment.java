@@ -39,9 +39,13 @@ public class ListEnvironment implements ICommand {
         if (args.length != 2) throw new InvalidCommand("Correct usage: list env");
         try {
             List<Environment> listEnv = this.service.listEnvironments();
-            println("+ Environments");
-            for(Environment env : listEnv) {
-                println("   - " + env.name);
+            if (!listEnv.isEmpty()) {
+                println("+ Environments");
+                for(Environment env : listEnv) {
+                    println("   - " + env.name);
+                }
+            } else {
+                println("Could not find environments");
             }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
@@ -52,10 +56,14 @@ public class ListEnvironment implements ICommand {
         if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
         try {
             List<Device> listDev = this.service.listDevicesByEnv(args[2]);
-            println("+ Environment: " + args[2]);
-            println("+ Devices");
-            for(Device dev : listDev) {
-                println("   - " + dev.name);
+            if (!listDev.isEmpty()) {
+                println("+ Environment: " + args[2]);
+                println("+ Devices");
+                for(Device dev : listDev) {
+                    println("   - " + dev.name);
+                }
+            } else {
+                println("Could not find devices for environment " + args[2]);
             }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
@@ -66,10 +74,14 @@ public class ListEnvironment implements ICommand {
         if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
         try {
             List<User> listUser = this.service.listUsersByEnv(args[2]);
-            println("+ Environment: " + args[2]);
-            println("+ Users");
-            for(User env : listUser) {
-                println("   - " + env.name);
+            if (!listUser.isEmpty()) {
+                println("+ Environment: " + args[2]);
+                println("+ Users");
+                for(User env : listUser) {
+                    println("   - " + env.name);
+                }
+            } else {
+                println("Could not find users for environment " + args[2]);
             }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());

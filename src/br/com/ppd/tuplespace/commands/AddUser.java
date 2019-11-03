@@ -21,7 +21,10 @@ public class AddUser implements Command{
         }
         try {
             Environment env = this.service.findEnvironment(args[2]);
-            this.service.send(new User(args[1], new Environment(args[2])));
+            if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[2]));
+
+            this.service.send(new User(args[1], env));
+            println(String.format("Added user %s to environment %s", args[1], args[2]));
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }

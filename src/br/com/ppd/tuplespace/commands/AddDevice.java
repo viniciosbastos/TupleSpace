@@ -22,7 +22,11 @@ public class AddDevice implements Command {
             throw new InvalidCommand("Correct usage: add_dev <device name> <environment name>");
         }
         try {
-            this.service.send(new Device(args[1], new Environment(args[2])));
+            Environment env = this.service.findEnvironment(args[2]);
+            if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[2]));
+
+            this.service.send(new Device(args[1], env));
+            println(String.format("Added device %s to environment %s", args[1], args[2]));
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }

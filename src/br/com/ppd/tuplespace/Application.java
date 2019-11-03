@@ -2,6 +2,7 @@ package br.com.ppd.tuplespace;
 
 import br.com.ppd.tuplespace.commands.CommandProcessor;
 import br.com.ppd.tuplespace.commands.InvalidCommand;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ class Application {
             command = this.scanner.nextLine();
             try {
                 CommandProcessor.process(command);
-            } catch (InvalidCommand invalidCommand) {
+            } catch (InvalidCommand|IllegalArgumentException invalidCommand) {
                 println(invalidCommand.getMessage());
             }
         } while(loop);

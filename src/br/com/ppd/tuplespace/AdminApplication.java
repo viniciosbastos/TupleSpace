@@ -1,18 +1,17 @@
 package br.com.ppd.tuplespace;
 
-import br.com.ppd.tuplespace.commands.CommandProcessor;
+import br.com.ppd.tuplespace.commands.AdminCommandProcessor;
 import br.com.ppd.tuplespace.commands.InvalidCommand;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.Scanner;
 
 import static br.com.ppd.tuplespace.util.Util.*;
 
-class Application {
+class AdminApplication {
 
     private Scanner scanner;
 
-    Application(){
+    AdminApplication(){
         this.scanner = new Scanner(System.in);
     }
 
@@ -24,7 +23,7 @@ class Application {
             print(">> ");
             command = this.scanner.nextLine();
             try {
-                CommandProcessor.process(command);
+                AdminCommandProcessor.process(command);
             } catch (InvalidCommand|IllegalArgumentException invalidCommand) {
                 println(invalidCommand.getMessage());
             }

@@ -1,6 +1,6 @@
 package br.com.ppd.tuplespace.commands;
 
-public class CommandProcessor {
+public class AdminCommandProcessor {
 
     public static void process(String commandLine) throws InvalidCommand{
         String[] args = commandLine.split(" ");

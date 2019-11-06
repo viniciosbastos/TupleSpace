@@ -2,6 +2,7 @@ package br.com.ppd.tuplespace.service;
 
 import br.com.ppd.tuplespace.models.Device;
 import br.com.ppd.tuplespace.models.Environment;
+import br.com.ppd.tuplespace.models.Message;
 import br.com.ppd.tuplespace.models.User;
 import br.com.ppd.tuplespace.util.Lookup;
 import net.jini.core.entry.Entry;
@@ -128,5 +129,19 @@ public class JavaSpaceService {
 
     public User searchUser(User user) throws ServiceUnavailable {
         return (User) read(user);
+    }
+
+    public List<Message> getMessages(User user) throws ServiceUnavailable {
+        List<Message> messages = new LinkedList<Message>();
+
+        Message message = null;
+        Message template = new Message();
+        template.env = user.environment.name;
+        do {
+            message = (Message) take(template);
+            if (message != null) messages.add(message);
+        } while(message != null);
+        write(messages);
+        return messages;
     }
 }

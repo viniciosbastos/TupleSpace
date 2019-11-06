@@ -23,15 +23,14 @@ public class MoveCommand implements ICommand {
         ETarget target = ETarget.valueOf(args[1].toUpperCase());
         this.args = args;
         switch(target) {
-            case ENV:
-                listEnv();
-                break;
             case USER:
                 listUserInEnv();
                 break;
             case DEV:
                 listDevicesInEnv();
                 break;
+            default:
+                println("Target not supported.");
         }
     }
 

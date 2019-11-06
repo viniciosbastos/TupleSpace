@@ -12,4 +12,7 @@ public class Device implements Entry {
         this.name = name;
         this.environment = environment;
     }
+    public Device(String name) {
+        this.name = name;
+    }
 }

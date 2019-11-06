@@ -12,4 +12,7 @@ public class User implements Entry {
         this.name = name;
         this.environment = environment;
     }
+    public User(String name) {
+        this.name = name;
+    }
 }

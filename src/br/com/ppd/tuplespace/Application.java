@@ -48,8 +48,8 @@ class Application {
         println("   rm user <name>");
         println("   rm dev <name>");
         println("Move Command: ");
-        println("   mv user <username>");
-        println("   mv dev <dev_name>");
+        println("   mv user <username> <new_env>");
+        println("   mv dev <dev_name> <new_env>");
         println("+-------------------------------------------+");
     }
 

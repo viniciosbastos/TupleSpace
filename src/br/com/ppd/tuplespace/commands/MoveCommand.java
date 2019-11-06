@@ -24,51 +24,52 @@ public class MoveCommand implements ICommand {
         this.args = args;
         switch(target) {
             case USER:
-                listUserInEnv();
+                moveUser();
                 break;
             case DEV:
-                listDevicesInEnv();
+                moveDev();
                 break;
             default:
                 println("Target not supported.");
         }
     }
 
-    private void listEnv() throws InvalidCommand {
-        if (args.length != 2) throw new InvalidCommand("Correct usage: list env");
+    private void moveDev() throws InvalidCommand {
+        if (args.length != 4) throw new InvalidCommand("Correct usage: mv dev <dev_name> <new_env>");
         try {
-            List<Environment> listEnv = this.service.listEnvironments();
-            println("+ Environments");
-            for(Environment env : listEnv) {
-                println("   - " + env.name);
+            Device dev = (Device) this.service.take(new Device(args[2]));
+            if (dev != null) {
+                Environment env = (Environment) this.service.read(new Environment(args[3]));
+                if (env != null) {
+                    dev.environment = env;
+                    this.service.send(dev);
+                    println(String.format("Device %s moved to environment %s", args[2], args[3]));
+                } else {
+                    println(String.format("Could not find environment %s", args[3]));
+                }
+            } else {
+                println(String.format("Could not find device %s", args[2]));
             }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }
     }
 
-    private void listDevicesInEnv() throws InvalidCommand {
-        if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
+    private void moveUser() throws InvalidCommand {
+        if (args.length != 4) throw new InvalidCommand("Correct usage: mv user <username> <new_env>");
         try {
-            List<Device> listDev = this.service.listDevicesByEnv(args[2]);
-            println("+ Environment: " + args[2]);
-            println("+ Devices");
-            for(Device dev : listDev) {
-                println("   - " + dev.name);
-            }
-        } catch (ServiceUnavailable serviceUnavailable) {
-            println("Could not execute command. Error: " + serviceUnavailable.getMessage());
-        }
-    }
-
-    private void listUserInEnv() throws InvalidCommand {
-        if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
-        try {
-            List<User> listUser = this.service.listUsersByEnv(args[2]);
-            println("+ Environment: " + args[2]);
-            println("+ Users");
-            for(User env : listUser) {
-                println("   - " + env.name);
+            User user = (User) this.service.take(new User(args[2]));
+            if (user != null) {
+                Environment env = (Environment) this.service.read(new Environment(args[3]));
+                if (env != null) {
+                    user.environment = env;
+                    this.service.send(user);
+                    println(String.format("User %s moved to environment %s", args[2], args[3]));
+                } else {
+                    println(String.format("Could not find environment %s", args[3]));
+                }
+            } else {
+                println(String.format("Could not find user %s", args[2]));
             }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());

@@ -20,7 +20,12 @@ public class MoveCommand implements ICommand {
 
     @Override
     public void execute(String[] args) throws InvalidCommand {
-        ETarget target = ETarget.valueOf(args[1].toUpperCase());
+        ETarget target = null;
+        try {
+            target = ETarget.valueOf(args[1].toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidCommand("Unknown target.");
+        }
         this.args = args;
         switch(target) {
             case USER:

@@ -6,6 +6,7 @@ import br.com.ppd.tuplespace.models.User;
 import br.com.ppd.tuplespace.util.Lookup;
 import net.jini.core.entry.Entry;
 import net.jini.core.entry.UnusableEntryException;
+import net.jini.core.lease.Lease;
 import net.jini.core.transaction.TransactionException;
 import net.jini.space.JavaSpace;
 
@@ -17,7 +18,7 @@ public class JavaSpaceService {
     private static JavaSpaceService INSTANCE = null;
 
     private JavaSpace space;
-    private long lease = 10*60*1000;
+    private long lease = 60*1000;
 
     private JavaSpaceService() {
         init();
@@ -29,7 +30,7 @@ public class JavaSpaceService {
 
     public void send(Entry entry) throws ServiceUnavailable{
         try {
-            this.space.write(entry, null, lease);
+            this.space.write(entry, null, Lease.FOREVER);
         } catch (RemoteException|TransactionException e) {
             e.printStackTrace();
             throw new ServiceUnavailable(e.getMessage());
@@ -119,5 +120,13 @@ public class JavaSpaceService {
         if (INSTANCE == null)
             INSTANCE = new JavaSpaceService();
         return INSTANCE;
+    }
+
+    public Device searchDevice(Device device) throws ServiceUnavailable {
+        return (Device) read(device);
+    }
+
+    public User searchUser(User user) throws ServiceUnavailable {
+        return (User) read(user);
     }
 }

@@ -40,8 +40,15 @@ public class AddCommand implements ICommand {
             Environment env = this.service.findEnvironment(args[3]);
             if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[3]));
 
-            this.service.send(new Device(args[2], env));
-            println(String.format("Added device %s to environment %s", args[2], args[3]));
+            Device device = new Device();
+            device.name = args[2];
+            if (this.service.searchDevice(device) == null) {
+                device.environment = env;
+                this.service.send(device);
+                println(String.format("Added device %s to environment %s", args[2], args[3]));
+            } else {
+                println(String.format("Found device %s in another environment", args[2]));
+            }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }
@@ -64,8 +71,15 @@ public class AddCommand implements ICommand {
             Environment env = this.service.findEnvironment(args[3]);
             if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[3]));
 
-            this.service.send(new User(args[2], env));
-            println(String.format("Added user %s to environment %s", args[2], args[3]));
+            User user = new User();
+            user.name = args[2];
+            if (this.service.searchUser(user) == null) {
+                user.environment = env;
+                this.service.send(new User(args[2], env));
+                println(String.format("Added user %s to environment %s", args[2], args[3]));
+            } else {
+                println(String.format("Found user %s in another environment", args[2]));
+            }
         } catch (ServiceUnavailable serviceUnavailable) {
             println("Could not execute command. Error: " + serviceUnavailable.getMessage());
         }

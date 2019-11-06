@@ -35,7 +35,7 @@ public class AddCommand implements ICommand {
     }
 
     private void addDevice() throws InvalidCommand{
-        if (args.length != 4) throw new InvalidCommand("Correct usage: add_dev <device name> <environment name>");
+        if (args.length != 4) throw new InvalidCommand("Correct usage: add dev <device name> <environment name>");
         try {
             Environment env = this.service.findEnvironment(args[3]);
             if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[3]));
@@ -55,7 +55,7 @@ public class AddCommand implements ICommand {
     }
 
     private void addEnv() throws InvalidCommand {
-        if (args.length != 3) throw new InvalidCommand("Correct usage: add_env <environment name>");
+        if (args.length != 3) throw new InvalidCommand("Correct usage: add env <environment name>");
         String envName = args[2];
         try {
             this.service.send(new Environment(envName));
@@ -66,7 +66,7 @@ public class AddCommand implements ICommand {
     }
 
     private void addUser() throws InvalidCommand {
-        if (args.length != 4) throw new InvalidCommand("Correct usage: add_user <username> <environment name>");
+        if (args.length != 4) throw new InvalidCommand("Correct usage: add user <username> <environment name>");
         try {
             Environment env = this.service.findEnvironment(args[3]);
             if (env == null) throw new IllegalArgumentException(String.format("Could not find environment with name %s", args[3]));

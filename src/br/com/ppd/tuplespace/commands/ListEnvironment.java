@@ -53,7 +53,7 @@ public class ListEnvironment implements ICommand {
     }
 
     private void listDevicesInEnv() throws InvalidCommand {
-        if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
+        if (args.length != 3) throw new InvalidCommand("Correct usage: list dev <environment_name>");
         try {
             List<Device> listDev = this.service.listDevicesByEnv(args[2]);
             if (!listDev.isEmpty()) {
@@ -71,7 +71,7 @@ public class ListEnvironment implements ICommand {
     }
 
     private void listUserInEnv() throws InvalidCommand {
-        if (args.length != 3) throw new InvalidCommand("Correct usage: list env <environment_name>");
+        if (args.length != 3) throw new InvalidCommand("Correct usage: list user <environment_name>");
         try {
             List<User> listUser = this.service.listUsersByEnv(args[2]);
             if (!listUser.isEmpty()) {

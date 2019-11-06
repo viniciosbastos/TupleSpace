@@ -32,15 +32,25 @@ class Application {
     }
 
     private void showCommandsTable() {
-        println("+-------------------------+");
-        println("+         Commands        +");
-        println("+-------------------------+");
-        println("Add Environment: add_env <environment name>");
-        println("Add User: add_user <username> <environment name>");
-        println("Add Device: add_dev <device name> <environment name>");
-        println("List all environments: list_env");
-        println("+-------------------------+");
-        println("");
+        println("+-------------------------------------------+");
+        println("+                  Commands                 +");
+        println("+-------------------------------------------+");
+        println("Add Command: ");
+        println("   add env <environment name>");
+        println("   add user <username> <environment name>");
+        println("   add dev <device_name> <environment name>");
+        println("List Command: ");
+        println("   ls env");
+        println("   ls user <environment name>");
+        println("   ls dev <environment name>");
+        println("Remove Command: ");
+        println("   rm env <name>");
+        println("   rm user <name>");
+        println("   rm dev <name>");
+        println("Move Command: ");
+        println("   mv user <username>");
+        println("   mv dev <dev_name>");
+        println("+-------------------------------------------+");
     }
 
 }
